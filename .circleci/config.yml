@@ -65,6 +65,10 @@ jobs:
 
 workflows:
   version: 2
+  my-workflow:
+    jobs:
+      - run-tests:
+          context: 6rs-circle
 
   test_and_publish:
     jobs:
