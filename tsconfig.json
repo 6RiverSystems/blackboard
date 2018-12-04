@@ -23,11 +23,8 @@
 		"experimentalDecorators": true,
 		"emitDecoratorMetadata": true
 	},
-	"exclude": [
-		"node_modules",
-		"scripts",
-		"coverage",
-		"dist",
+	"include": [
+		"lib",
 		"test"
 	]
 }
