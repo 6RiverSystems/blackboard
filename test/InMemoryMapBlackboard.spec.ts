@@ -11,9 +11,8 @@ describe('InMemoryMapBlackboard', function() {
 		};
 		const value = 'someValue';
 
-		const gottenUut = uut.put(bbRef, value);
+		uut.put(bbRef, value);
 		let gottenValue = uut.get<string>(bbRef);
-		assert.strictEqual(gottenUut, uut);
 		assert.strictEqual(gottenValue, value);
 
 		let deleteResult = uut.delete(bbRef);
