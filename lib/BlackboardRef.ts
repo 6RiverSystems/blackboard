@@ -7,9 +7,10 @@ export function blackboardRefToString(blackboardRef: BlackboardRef) {
 	return blackboardRef.uuid + '-' + blackboardRef.name;
 }
 
-export function stringToBlackboardRef(str: string) {
-	return {
-		uuid: str.substring(0, 36),
-		name: str.substring(37),
-	};
-}
+// could be needed for enhanced serialization of Blackboard instances
+// export function stringToBlackboardRef(str: string): BlackboardRef {
+// 	return {
+// 		uuid: str.substring(0, 36),
+// 		name: str.substring(37),
+// 	};
+// }

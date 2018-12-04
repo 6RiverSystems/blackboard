@@ -1,19 +1,19 @@
 import {Blackboard} from './Blackboard';
-import {BlackboardRef, blackboardRefToString, stringToBlackboardRef} from './BlackboardRef';
+import {BlackboardRef, blackboardRefToString} from './BlackboardRef';
 
-export class InMemoryMapBlackboard<T> implements Blackboard<T> {
-	private readonly state: Map<string, T>
+export class InMemoryMapBlackboard implements Blackboard {
+	private readonly state: Map<string, any> = new Map();
 
-	public get(blackboardRef: BlackboardRef) {
+	public get<T>(blackboardRef: BlackboardRef): T {
 		return this.state.get(blackboardRefToString(blackboardRef));
 	}
 
-	public put(blackboardRef: BlackboardRef, value: T) {
+	public put(blackboardRef: BlackboardRef, value: any) {
 		this.state.set(blackboardRefToString(blackboardRef), value);
 		return this;
 	}
 
-	public delete(blackboardRef: BlackboardRef): boolean {
+	public delete(blackboardRef: BlackboardRef) {
 		return this.state.delete(blackboardRefToString(blackboardRef));
 	}
 }
