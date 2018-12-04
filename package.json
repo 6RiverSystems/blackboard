@@ -22,7 +22,8 @@
 		"commitmsg": "validate-commit-msg"
 	},
 	"repository": {
-		"type": "git"
+		"type": "git",
+		"url": "https://github.com/6RiverSystems/blackboard.git"
 	},
 	"author": "",
 	"license": "",
