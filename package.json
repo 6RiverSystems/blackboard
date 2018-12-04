@@ -11,6 +11,7 @@
 		"compile": "npm-run-all compile:js",
 		"compile:js": "tsc --pretty",
 		"compile:watch": "tsc --pretty --watch",
+		"build": "npm run compile",
 		"pretest": "npm-run-all pretest:eslint",
 		"pretest:eslint": "eslint .",
 		"pretest:nsp": "nsp check",
