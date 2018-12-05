@@ -39,6 +39,7 @@ jobs:
       - run:
           name: npm publish via script
           command: |
+            ci_scripts/ci_tool.sh --run_release
             ci_scripts/ci_tool.sh --npm_publish
   test:
     docker:
