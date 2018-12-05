@@ -2,52 +2,47 @@ import {Blackboard} from './Blackboard';
 import {BlackboardRef} from './BlackboardRef';
 
 export class InMemoryMapBlackboard implements Blackboard {
-	private readonly keys: Set<string> = new Set<string>();
-	private readonly state: Map<string, any> = new Map();
+	private readonly state: Map<string, [BlackboardRef<any>, any]> = new Map();
 
-	public get<T>(blackboardRef: BlackboardRef<T>) {
-		const k = this.blackboardRefToString(blackboardRef);
-		if ( this.keys.has(k)){
-			return this.state.get(k);
+	public get<T>(ref: BlackboardRef<T>) {
+		if (this.state.has(ref.uuid)){
+			return this.state.get(ref.uuid)![1];
 		} else {
-			throw new Error(`could not locate reference for ${blackboardRef.name}`);
+			throw new Error(`could not locate reference for ${ref.name}`);
 		}
 	}
 
-	public tryGet<T>(blackboardRef: BlackboardRef<T>): [boolean, T?] {
-		const k = this.blackboardRefToString(blackboardRef);
-		const exists = this.keys.has(k);
-		return [exists, exists ? this.state.get(k) : undefined];
+	public tryGet<T>(ref: BlackboardRef<T>): [boolean, T?] {
+		const exists = this.state.has(ref.uuid);
+		return [exists, exists ? this.state.get(ref.uuid)![1] : undefined];
 	}
 
-	public create<T>(blackboardRef: BlackboardRef<T>, value: T) {
-		const k = this.blackboardRefToString(blackboardRef);
-		if (this.keys.has(k)) {
-			throw new Error(`key already exists for ${blackboardRef.name}`);
+	public create<T>(ref: BlackboardRef<T>, value: T) {
+		if (this.state.has(ref.uuid)) {
+			throw new Error(`key already exists for ${ref.name}`);
 		}
-		this.keys.add(k);
-		this.state.set(k, value);
+		this.state.set(ref.uuid, [ref, value]);
 	}
 
-	public put<T>(blackboardRef: BlackboardRef<T>, value: T) {
-		const k = this.blackboardRefToString(blackboardRef);
-		this.keys.add(k);
-		this.state.set(k, value);
+	public put<T>(ref: BlackboardRef<T>, value: T) {
+		this.state.set(ref.uuid, [ref, value]);
 	}
 
-	public delete(blackboardRef: BlackboardRef<any>) {
-		return this.state.delete(this.blackboardRefToString(blackboardRef));
+	public delete(ref: BlackboardRef<any>) {
+		return this.state.delete(ref.uuid);
 	}
 
-	private blackboardRefToString(blackboardRef: BlackboardRef<any>) {
-		return blackboardRef.uuid + '-' + blackboardRef.name;
+	// handy for viewing in the debugger and logging
+	private get stateReadable(): Object {
+		return [...this.state.entries()].reduce((acc, next) => {
+			const uuid = next[0];
+			const name = next[1][0].name;
+			const value = next[1][1];
+			if (acc.hasOwnProperty(name)) {
+				return {...acc, [name + '-' + uuid]: value};
+			} else {
+				return {...acc, [name]: value};
+			}
+		}, {})
 	}
-
-	// could be needed for enhanced serialization of Blackboard instances
-	// private stringToBlackboardRef(str: string): BlackboardRef {
-	// 	return {
-	// 		uuid: str.substring(0, 36),
-	// 		name: str.substring(37),
-	// 	};
-	// }
 }
