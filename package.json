@@ -5,6 +5,8 @@
 	"engines": {
 		"node": ">=8.9"
 	},
+	"main": "dist/lib/index.js",
+	"typings": "dist/lib/index.d.ts",
 	"scripts": {
 		"clean": "npm-run-all clean:js",
 		"clean:js": "shx rm -rf dist",
