@@ -19,6 +19,11 @@ jobs:
           key: dependency-cache-{{ checksum "package-lock.json" }}
           paths:
             - ./node_modules
+      - run:
+          name: Set Up Environment
+          command: |
+            git submodule update --init --recursive
+            ci_scripts/ci_tool.sh --setup_npm
       - persist_to_workspace:
           root: ./
           paths:
@@ -32,13 +37,9 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
-          name: Set NPM auth token
-          command: |
-             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
-      - run:
           name: npm publish via script
           command: |
-            ./scripts/release.sh
+            ci_scripts/ci_tool.sh --npm_publish
   test:
     docker:
       - image: node:8.9.4
@@ -65,17 +66,15 @@ jobs:
 
 workflows:
   version: 2
-  my-workflow:
-    jobs:
-      - run-tests:
-          context: 6rs-circle
-
   test_and_publish:
     jobs:
-      - setup
+      - setup:
+          context: 6rs-circle
       - test:
+          context: 6rs-circle
           requires:
             - setup
       - publish:
+          context: 6rs-circle
           requires:
             - test
