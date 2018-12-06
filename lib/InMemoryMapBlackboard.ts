@@ -13,9 +13,13 @@ export class InMemoryMapBlackboard implements Blackboard {
 		}
 	}
 
-	public tryGet<T>(ref: BlackboardRef<T>): [boolean, T?] {
+	public tryGet<T>(ref: BlackboardRef<T>): [true, T]|[false, undefined] {
 		const exists = this.state.has(ref.uuid);
-		return [exists, exists ? _.cloneDeep(this.state.get(ref.uuid)![1]) : undefined];
+		if (exists) {
+			return [exists, _.cloneDeep(this.state.get(ref.uuid)![1])];
+		} else {
+			return [exists, undefined];
+		}
 	}
 
 	public create<T>(ref: BlackboardRef<T>, value: T) {
