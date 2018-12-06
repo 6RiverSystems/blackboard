@@ -36,7 +36,7 @@
 	"devDependencies": {
 		"@types/archy": "0.0.31",
 		"@types/chai": "^4.0.4",
-		"@types/lodash": "^4.14.110",
+		"@types/lodash": "^4.14.119",
 		"@types/mocha": "^2.2.43",
 		"@types/node": "^9.4.6",
 		"@types/reflect-metadata": "^0.1.0",
@@ -67,6 +67,7 @@
 	"dependencies": {
 		"archy": "^1.0.0",
 		"source-map-support": "^0.5.3",
-		"uuid": "^3.2.1"
+		"uuid": "^3.2.1",
+		"lodash": "^4.17.11"
 	}
 }

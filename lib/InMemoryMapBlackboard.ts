@@ -1,12 +1,13 @@
 import {Blackboard} from './Blackboard';
 import {BlackboardRef} from './BlackboardRef';
+import * as _ from 'lodash';
 
 export class InMemoryMapBlackboard implements Blackboard {
 	private readonly state: Map<string, [BlackboardRef<any>, any]> = new Map();
 
 	public get<T>(ref: BlackboardRef<T>) {
 		if (this.state.has(ref.uuid)){
-			return this.state.get(ref.uuid)![1];
+			return _.cloneDeep(this.state.get(ref.uuid)![1]);
 		} else {
 			throw new Error(`could not locate reference for ${ref.name}`);
 		}
@@ -14,7 +15,7 @@ export class InMemoryMapBlackboard implements Blackboard {
 
 	public tryGet<T>(ref: BlackboardRef<T>): [boolean, T?] {
 		const exists = this.state.has(ref.uuid);
-		return [exists, exists ? this.state.get(ref.uuid)![1] : undefined];
+		return [exists, exists ? _.cloneDeep(this.state.get(ref.uuid)![1]) : undefined];
 	}
 
 	public create<T>(ref: BlackboardRef<T>, value: T) {
