@@ -1,7 +1,7 @@
 import {assert} from 'chai';
 import {BlackboardRef} from '../lib/BlackboardRef';
 
-describe('BlackboardRefFactory', function() {
+describe('BlackboardRef', function() {
 	it('works', function() {
 		const name = 'someName';
 		const uut = new BlackboardRef('root');
