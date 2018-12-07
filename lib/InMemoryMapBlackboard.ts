@@ -42,7 +42,7 @@ export class InMemoryMapBlackboard implements Blackboard {
 	// A: cfs_models depends on this method. Therefore, changes to this method should be considered breaking
 	// Q: doesn't exposing entire state of the blackboard compromise component isolation?
 	// A: no, because this method is not in the Blackboard interface
-	public get stateReadable(): Object {
+	public get stateReadable(): {[K in string]?: object} {
 		return [...this.state.entries()].reduce((acc, next) => {
 			const uuid = next[0];
 			const name = next[1][0].name;

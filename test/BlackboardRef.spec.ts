@@ -4,7 +4,7 @@ import {BlackboardRef} from '../lib/BlackboardRef';
 describe('BlackboardRef', function() {
 	it('works', function() {
 		const name = 'someName';
-		const uut = new BlackboardRef('root');
+		const uut = new BlackboardRef(name);
 
 		assert.isOk(uut.uuid);
 		assert.strictEqual(uut.name, name);
@@ -12,7 +12,7 @@ describe('BlackboardRef', function() {
 	it('handles hierarchy', function() {
 		const name = 'someName';
 		const childName = 'childName';
-		const uut = new BlackboardRef('root');
+		const uut = new BlackboardRef(name);
 
 		assert.isOk(uut.uuid);
 		assert.strictEqual(uut.name, name);
