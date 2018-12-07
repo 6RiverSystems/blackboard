@@ -5,13 +5,10 @@
 		"text"
 	],
 	"include": [
-		"lib/**/*.ts",
-		"lib/**/*.tsx"
+		"dist/**"
 	],
 	"exclude": [
-		"lib/**/*.d.ts",
-		"test/**/*.test.ts",
-		"test/**/*.test.tsx"
+		"dist/test/**"
 	],
 	"extension": [
 		".ts",

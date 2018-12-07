@@ -8,4 +8,11 @@ export class BlackboardRefFactory {
 			name
 		};
 	}
+	public manufactureChild<T>(parent: BlackboardRef<any>, childName: string): BlackboardRef<T> {
+		return {
+			uuid: uuid.v4(),
+			name: parent.name + '.' + childName
+		};
+	}
+
 }
