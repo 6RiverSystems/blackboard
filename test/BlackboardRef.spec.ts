@@ -1,23 +1,23 @@
 import {assert} from 'chai';
-import {BlackboardRefFactory} from '../lib/BlackboardRefFactory';
+import {BlackboardRef} from '../lib/BlackboardRef';
 
 describe('BlackboardRefFactory', function() {
 	it('works', function() {
 		const name = 'someName';
-		const uut = new BlackboardRefFactory();
+		const uut = new BlackboardRef('root');
 
-		const bbRef = uut.manufacture(name);
-
-		assert.isOk(bbRef.uuid);
-		assert.strictEqual(bbRef.name, name);
+		assert.isOk(uut.uuid);
+		assert.strictEqual(uut.name, name);
 	});
 	it('handles hierarchy', function() {
 		const name = 'someName';
 		const childName = 'childName';
-		const uut = new BlackboardRefFactory();
+		const uut = new BlackboardRef('root');
 
-		const bbRef = uut.manufacture(name);
-		const childRef = uut.manufactureChild(bbRef, childName);
+		assert.isOk(uut.uuid);
+		assert.strictEqual(uut.name, name);
+
+		const childRef = uut.createChild(childName);
 
 		assert.isOk(childRef.uuid);
 		assert.isTrue(childRef.name.indexOf(name) >= 0);
