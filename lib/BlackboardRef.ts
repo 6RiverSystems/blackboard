@@ -3,6 +3,8 @@ import uuid = require("uuid");
 export class BlackboardRef<T> {
 	private _uuid: string;
 	private _name: string;
+	// This is unused but prevents assigning, e.g. BlackboardRef<string> to BlackboardRef<number>
+	private readonly _marker!: T;
 
 	constructor(name: string, parent?: BlackboardRef<any>) {
 		if ( parent ) {
