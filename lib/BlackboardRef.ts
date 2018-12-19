@@ -4,7 +4,7 @@ export class BlackboardRef<T> {
 	private _uuid: string;
 	private _name: string;
 	// This is unused but prevents assigning, e.g. BlackboardRef<string> to BlackboardRef<number>
-	private readonly _marker!: T;
+	protected readonly _marker!: T;
 	private readonly childList: BlackboardRef<any>[] = [];
 
 	constructor(name: string, parent?: BlackboardRef<any>) {
