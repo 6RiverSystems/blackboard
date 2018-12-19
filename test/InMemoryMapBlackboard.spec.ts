@@ -96,6 +96,23 @@ describe('InMemoryMapBlackboard', function() {
 		assert.isFalse(deleteResult);
 	});
 
+	it('deleteAll', function() {
+		const uut = new InMemoryMapBlackboard();
+		const r1 = new BlackboardRef('r1');
+		const r2 = new BlackboardRef('r2');
+		const r3 = new BlackboardRef('r3');
+		uut.put(r1, 1);
+		uut.put(r2, 2);
+		uut.put(r3, 3);
+		assert.lengthOf(Object.entries(uut.stateReadable), 3);
+		let deleted = uut.deleteAll([r1, r2]);
+		assert.deepStrictEqual(deleted, [r1, r2]);
+		assert.lengthOf(Object.entries(uut.stateReadable), 1);
+		deleted = uut.deleteAll([r1, r2]);
+		assert.deepStrictEqual(deleted, []);
+		assert.lengthOf(Object.entries(uut.stateReadable), 1);
+	})
+
 	it('stateReadable', function() {
 		const uut = new InMemoryMapBlackboard();
 		const bbRef1 = new BlackboardRef('someName');
