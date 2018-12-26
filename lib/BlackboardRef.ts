@@ -1,14 +1,14 @@
-import uuid = require("uuid");
+import * as uuid from 'uuid';
 
 export class BlackboardRef<T> {
-	private _uuid: string;
-	private _name: string;
+	private readonly _uuid: string;
+	private readonly _name: string;
+	private readonly _children: BlackboardRef<any>[] = [];
 	// This is unused but prevents assigning, e.g. BlackboardRef<string> to BlackboardRef<number>
 	protected readonly _marker!: T;
-	private readonly childList: BlackboardRef<any>[] = [];
 
 	constructor(name: string, parent?: BlackboardRef<any>) {
-		if ( parent ) {
+		if (parent) {
 			name = parent.name + '.' + name;
 		}
 		this._uuid = uuid.v4();
@@ -17,17 +17,22 @@ export class BlackboardRef<T> {
 
 	public createChild<U>(name: string): BlackboardRef<U> {
 		const ref = new BlackboardRef<U>(name, this);
-		this.childList.push(ref);
+		this._children.push(ref);
 		return ref;
 	}
 
+	public get descendants(): BlackboardRef<any>[] {
+		return this._children.concat(...this._children.map(c => c.descendants));
+	}
+
 	public get children(): BlackboardRef<any>[] {
-		return this.childList.concat(...this.childList.map(c=>c.children));
+		return this._children;
 	}
 
 	public get uuid(): string {
 		return this._uuid;
 	}
+
 	public get name(): string {
 		return this._name;
 	}

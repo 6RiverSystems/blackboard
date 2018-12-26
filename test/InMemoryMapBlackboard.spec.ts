@@ -85,15 +85,31 @@ describe('InMemoryMapBlackboard', function() {
 	it('delete', function() {
 		const uut = new InMemoryMapBlackboard();
 		const bbRef = new BlackboardRef('someName');
+		const bbRefChild = bbRef.createChild('child');
+		const bbRefGrandChild = bbRefChild.createChild('grandChild');
 		const value = 'someValue';
+		const valueChild = 'someValueChild';
+		const valueGrandChild = 'someValueGrandChild';
 
 		uut.put(bbRef, value);
+		uut.put(bbRefChild, valueChild);
+		uut.put(bbRefGrandChild, valueGrandChild);
 
-		let deleteResult = uut.delete(bbRef);
+		// recursive delete
+		let deleteResult = uut.delete(bbRefChild);
 		assert.isTrue(deleteResult);
+		assert.lengthOf(Object.entries(uut.stateReadable), 1);
+		assert.strictEqual(uut.get(bbRef), value);
 
+		// non-recursive delete
+		deleteResult = uut.delete(bbRef);
+		assert.isTrue(deleteResult);
+		assert.lengthOf(Object.entries(uut.stateReadable), 0);
+
+		// subsequent identical deletes
 		deleteResult = uut.delete(bbRef);
 		assert.isFalse(deleteResult);
+		assert.lengthOf(Object.entries(uut.stateReadable), 0);
 	});
 
 	it('deleteAll', function() {
@@ -106,10 +122,10 @@ describe('InMemoryMapBlackboard', function() {
 		uut.put(r3, 3);
 		assert.lengthOf(Object.entries(uut.stateReadable), 3);
 		let deleted = uut.deleteAll([r1, r2]);
-		assert.deepStrictEqual(deleted, [r1, r2]);
+		assert.deepStrictEqual(deleted, [true, true]);
 		assert.lengthOf(Object.entries(uut.stateReadable), 1);
 		deleted = uut.deleteAll([r1, r2]);
-		assert.deepStrictEqual(deleted, []);
+		assert.deepStrictEqual(deleted, [false, false]);
 		assert.lengthOf(Object.entries(uut.stateReadable), 1);
 	})
 
