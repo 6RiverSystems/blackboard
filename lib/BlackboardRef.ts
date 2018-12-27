@@ -21,6 +21,10 @@ export class BlackboardRef<T> {
 		return ref;
 	}
 
+	public get children(): ReadonlyArray<BlackboardRef<any>> {
+		return this._children;
+	}
+
 	public get descendants(): BlackboardRef<any>[] {
 		return this._children.concat(...this._children.map(c => c.descendants));
 	}
