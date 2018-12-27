@@ -49,7 +49,7 @@ describe('InMemoryMapBlackboard', function() {
 
 	it('get object with getters', function() {
 		const uut = new InMemoryMapBlackboard();
-		const bbRef = new BlackboardRef('someName');
+		const bbRef = new BlackboardRef<string>('someName');
 		const value = 'someValue';
 
 		let thrown = false;
