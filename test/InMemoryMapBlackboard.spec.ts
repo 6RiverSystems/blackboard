@@ -5,7 +5,7 @@ import { BlackboardRef } from '../lib';
 describe('InMemoryMapBlackboard', function() {
 	it('create', function() {
 		const uut = new InMemoryMapBlackboard();
-		const bbRef = new BlackboardRef('someName');
+		const bbRef = new BlackboardRef<string>('someName');
 		const value = 'someValue';
 
 		uut.create(bbRef, value);
@@ -26,6 +26,28 @@ describe('InMemoryMapBlackboard', function() {
 	});
 
 	it('get', function() {
+		const uut = new InMemoryMapBlackboard();
+		const bbRef = new BlackboardRef<string>('someName');
+		const value = 'someValue';
+
+		let thrown = false;
+
+		try {
+			uut.get(bbRef);
+		} catch(err) {
+			thrown = true;
+		}
+
+		assert.isTrue(thrown);
+
+		uut.put(bbRef, value);
+
+		const gottenValue = uut.get(bbRef);
+
+		assert.strictEqual(gottenValue, value);
+	});
+
+	it('get object with getters', function() {
 		const uut = new InMemoryMapBlackboard();
 		const bbRef = new BlackboardRef('someName');
 		const value = 'someValue';
@@ -49,7 +71,7 @@ describe('InMemoryMapBlackboard', function() {
 
 	it('tryGet', function() {
 		const uut = new InMemoryMapBlackboard();
-		const bbRef = new BlackboardRef('someName');
+		const bbRef = new BlackboardRef<string>('someName');
 		const value = 'someValue';
 
 		let [exists, gottenValue] = uut.tryGet(bbRef);
@@ -66,7 +88,7 @@ describe('InMemoryMapBlackboard', function() {
 
 	it('put', function() {
 		const uut = new InMemoryMapBlackboard();
-		const bbRef = new BlackboardRef('someName');
+		const bbRef = new BlackboardRef<string>('someName');
 		const value = 'someValue';
 
 		uut.put(bbRef, value);
@@ -84,7 +106,7 @@ describe('InMemoryMapBlackboard', function() {
 
 	it('delete', function() {
 		const uut = new InMemoryMapBlackboard();
-		const bbRef = new BlackboardRef('someName');
+		const bbRef = new BlackboardRef<string>('someName');
 		const value = 'someValue';
 
 		uut.put(bbRef, value);
@@ -98,9 +120,9 @@ describe('InMemoryMapBlackboard', function() {
 
 	it('deleteAll', function() {
 		const uut = new InMemoryMapBlackboard();
-		const r1 = new BlackboardRef('r1');
-		const r2 = new BlackboardRef('r2');
-		const r3 = new BlackboardRef('r3');
+		const r1 = new BlackboardRef<number>('r1');
+		const r2 = new BlackboardRef<number>('r2');
+		const r3 = new BlackboardRef<number>('r3');
 		uut.put(r1, 1);
 		uut.put(r2, 2);
 		uut.put(r3, 3);
@@ -115,8 +137,8 @@ describe('InMemoryMapBlackboard', function() {
 
 	it('stateReadable', function() {
 		const uut = new InMemoryMapBlackboard();
-		const bbRef1 = new BlackboardRef('someName');
-		const bbRef2 = new BlackboardRef('someName');
+		const bbRef1 = new BlackboardRef<string>('someName');
+		const bbRef2 = new BlackboardRef<string>('someName');
 		const value1 = 'someValue1';
 		const value2 = 'someValue2';
 

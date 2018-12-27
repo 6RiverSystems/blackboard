@@ -6,17 +6,18 @@ export class InMemoryMapBlackboard implements Blackboard {
 	private readonly state: Map<string, [BlackboardRef<any>, any]> = new Map();
 
 	public get<T>(ref: BlackboardRef<T>) {
-		if (this.state.has(ref.uuid)){
-			return _.cloneDeep(this.state.get(ref.uuid)![1]);
-		} else {
+		const [hasValue, value] = this.tryGet(ref);
+		if (!hasValue){
 			throw new Error(`could not locate reference for ${ref.name}`);
-		}
+		} 		
+		return value!;
 	}
 
 	public tryGet<T>(ref: BlackboardRef<T>): [true, T]|[false, undefined] {
 		const exists = this.state.has(ref.uuid);
 		if (exists) {
-			return [exists, _.cloneDeep(this.state.get(ref.uuid)![1])];
+			const rawValue = this.state.get(ref.uuid)![1];
+			return [exists, InMemoryMapBlackboard.shallowClone(rawValue)];
 		} else {
 			return [exists, undefined];
 		}
@@ -57,5 +58,12 @@ export class InMemoryMapBlackboard implements Blackboard {
 				return {...acc, [name]: value};
 			}
 		}, {})
+	}
+
+	private static shallowClone<T>(obj: T) {
+		return Object.create(
+			Object.getPrototypeOf(obj), 
+			Object.getOwnPropertyDescriptors(obj) 
+		);
 	}
 }

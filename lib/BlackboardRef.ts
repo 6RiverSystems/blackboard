@@ -1,6 +1,22 @@
 import * as uuid from 'uuid';
 
-export class BlackboardRef<T> {
+export type Primitive =
+| boolean
+| number
+| string
+| symbol
+| null
+| undefined
+| Date
+| void;
+
+export type PrimitiveObject<T> = {
+	[K in keyof T]: T[K] extends Primitive ? T[K] : never
+};
+
+export type EmptyObject = {};
+
+export class BlackboardRef<T extends EmptyObject | Primitive | Primitive[] | PrimitiveObject<T> = void> {
 	private readonly _uuid: string;
 	private readonly _name: string;
 	private readonly _children: BlackboardRef<any>[] = [];
