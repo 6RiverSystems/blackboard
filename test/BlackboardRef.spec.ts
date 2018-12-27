@@ -17,7 +17,7 @@ describe('BlackboardRef', function() {
 
 		assert.isOk(uut.uuid);
 		assert.strictEqual(uut.name, name);
-		assert.lengthOf(uut.children, 0);
+		assert.lengthOf(uut.descendants, 0);
 
 		const childRef = uut.createChild(childName);
 
@@ -26,14 +26,14 @@ describe('BlackboardRef', function() {
 		assert.isTrue(childRef.name.indexOf(childName) >= 0);
 		assert.notEqual(childRef.name, childName);
 		assert.notEqual(childRef.name, name);
-		assert.lengthOf(uut.children, 1);
-		assert.deepStrictEqual(uut.children, [childRef]);
+		assert.lengthOf(uut.descendants, 1);
+		assert.deepStrictEqual(uut.descendants, [childRef]);
 
 		const grandChildRef = childRef.createChild(grandChildName);
 
 		assert.isOk(grandChildRef.uuid);
-		assert.lengthOf(grandChildRef.children, 0);
-		assert.lengthOf(childRef.children, 1);
-		assert.lengthOf(uut.children, 2);
+		assert.lengthOf(grandChildRef.descendants, 0);
+		assert.lengthOf(childRef.descendants, 1);
+		assert.lengthOf(uut.descendants, 2);
 	});
 });
