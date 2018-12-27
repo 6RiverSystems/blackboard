@@ -34,14 +34,11 @@ export class InMemoryMapBlackboard implements Blackboard {
 	}
 
 	public delete(ref: BlackboardRef<any>) {
-		ref.descendants.forEach((refD) => {
-			this.state.delete(refD.uuid);
-		});
 		return this.state.delete(ref.uuid);
 	}
 
 	public deleteAll(refs: BlackboardRef<any>[]) {
-		return refs.map((ref) => this.delete(ref));
+		return refs.filter((r) => this.delete(r));
 	}
 
 	// handy method for viewing in the debugger and logging

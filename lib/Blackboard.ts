@@ -6,5 +6,5 @@ export interface Blackboard {
 	tryGet<T>(ref: BlackboardRef<T>): [true, T]|[false, undefined];
 	put<T>(ref: BlackboardRef<T>, value: T): void;
 	delete(ref: BlackboardRef<any>): boolean;
-	deleteAll(refs: BlackboardRef<any>[]): boolean[];
+	deleteAll(refs: BlackboardRef<any>[]): BlackboardRef<any>[];
 }
