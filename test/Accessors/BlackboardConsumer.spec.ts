@@ -4,9 +4,12 @@ import {BlackboardConsumer} from '../../lib/Accessors/';
 import { InMemoryMapBlackboard } from '../../lib';
 
 describe('BlackboardConsumer', function() {
-	const bb = new InMemoryMapBlackboard();
+	let bb = new InMemoryMapBlackboard();
 	const r = new BlackboardRef<number>('test');
 	const a = new BlackboardConsumer(r);
+
+	beforeEach(function() {bb = new InMemoryMapBlackboard()});
+
 	it('fails for missing data', function() {
 		let threw = false;
 		try {

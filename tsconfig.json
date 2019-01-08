@@ -24,7 +24,7 @@
 		"emitDecoratorMetadata": true
 	},
 	"include": [
-		"lib",
-		"test"
+		"lib/**/*",
+		"test/**/*"
 	]
 }
