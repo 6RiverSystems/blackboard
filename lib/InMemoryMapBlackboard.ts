@@ -1,13 +1,13 @@
 import {Blackboard} from './Blackboard';
 import {BlackboardRef} from './BlackboardRef';
 import * as _ from 'lodash';
-import { BlackboardError } from './BlackboardError';
+import {BlackboardError} from './BlackboardError';
 
 export class InMemoryMapBlackboard implements Blackboard {
 	private readonly state: Map<string, [BlackboardRef<any>, any]> = new Map();
 
 	public get<T>(ref: BlackboardRef<T>) {
-		if (this.state.has(ref.uuid)){
+		if (this.state.has(ref.uuid)) {
 			return _.cloneDeep(this.state.get(ref.uuid)![1]);
 		} else {
 			throw new BlackboardError(ref, `could not locate reference for ${ref.name}`);
@@ -57,6 +57,6 @@ export class InMemoryMapBlackboard implements Blackboard {
 			} else {
 				return {...acc, [name]: value};
 			}
-		}, {})
+		}, {});
 	}
 }

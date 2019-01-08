@@ -35,7 +35,7 @@ describe('BlackboardRef', function() {
 		assert.lengthOf(grandChildRef.descendants, 0);
 		assert.lengthOf(childRef.descendants, 1);
 		assert.lengthOf(uut.descendants, 2);
-		
+
 		assert.lengthOf(uut.children, 1);
 		assert.lengthOf(childRef.children, 1);
 		assert.lengthOf(grandChildRef.children, 0);

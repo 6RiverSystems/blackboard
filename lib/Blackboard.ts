@@ -1,4 +1,4 @@
-import {BlackboardRef} from "./BlackboardRef";
+import {BlackboardRef} from './BlackboardRef';
 
 export interface Blackboard {
 	create<T>(ref: BlackboardRef<T>, value: T): void;
