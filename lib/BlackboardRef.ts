@@ -26,7 +26,7 @@ export class BlackboardRef<T> {
 	}
 
 	public get descendants(): BlackboardRef<any>[] {
-		return this._children.concat(...this._children.map(c => c.descendants));
+		return this._children.concat(...this._children.map((c) => c.descendants));
 	}
 
 	public get uuid(): string {

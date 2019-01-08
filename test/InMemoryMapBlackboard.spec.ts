@@ -1,6 +1,6 @@
 import {assert} from 'chai';
 import {InMemoryMapBlackboard} from '../lib/InMemoryMapBlackboard';
-import { BlackboardRef } from '../lib';
+import {BlackboardRef} from '../lib';
 
 describe('InMemoryMapBlackboard', function() {
 	it('create', function() {
@@ -18,7 +18,7 @@ describe('InMemoryMapBlackboard', function() {
 
 		try {
 			uut.create(bbRef, value);
-		} catch(err) {
+		} catch (err) {
 			thrown = true;
 		}
 
@@ -34,7 +34,7 @@ describe('InMemoryMapBlackboard', function() {
 
 		try {
 			uut.get(bbRef);
-		} catch(err) {
+		} catch (err) {
 			thrown = true;
 		}
 
@@ -111,7 +111,7 @@ describe('InMemoryMapBlackboard', function() {
 		deleted = uut.deleteAll([r1, r2]);
 		assert.deepStrictEqual(deleted, []);
 		assert.lengthOf(Object.entries(uut.stateReadable), 1);
-	})
+	});
 
 	it('stateReadable', function() {
 		const uut = new InMemoryMapBlackboard();
