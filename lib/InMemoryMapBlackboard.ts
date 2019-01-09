@@ -8,7 +8,7 @@ export class InMemoryMapBlackboard implements Blackboard {
 
 	public get<T>(ref: BlackboardRef<T>) {
 		if (this.state.has(ref.uuid)) {
-			return _.cloneDeep(this.state.get(ref.uuid)![1]);
+			return InMemoryMapBlackboard.cloneObject(this.state.get(ref.uuid)![1]);
 		} else {
 			throw new BlackboardError(ref, `could not locate reference for ${ref.name}`);
 		}
@@ -17,7 +17,7 @@ export class InMemoryMapBlackboard implements Blackboard {
 	public tryGet<T>(ref: BlackboardRef<T>): [true, T]|[false, undefined] {
 		const exists = this.state.has(ref.uuid);
 		if (exists) {
-			return [exists, _.cloneDeep(this.state.get(ref.uuid)![1])];
+			return [exists, InMemoryMapBlackboard.cloneObject(this.state.get(ref.uuid)![1])];
 		} else {
 			return [exists, undefined];
 		}
@@ -58,5 +58,18 @@ export class InMemoryMapBlackboard implements Blackboard {
 				return {...acc, [name]: value};
 			}
 		}, {});
+	}
+
+	private static cloneObject<T>(obj: T) {
+		// NOTE: lodash clone is "loosely based on the structured clone algorithm" which doesn't handle certian object
+		// types, so for now just passing them through (otherwise lodash returns an empty object)
+		//		see here: https://lodash.com/docs/4.17.11#clone
+		//		and here: https://developer.mozilla.org/en-US/docs/Web/API/Web_Workers_API/Structured_clone_algorithm)
+		if (obj instanceof Function ||
+			obj instanceof Error) {
+			return obj;
+		}
+
+		return _.cloneDeep(obj);
 	}
 }

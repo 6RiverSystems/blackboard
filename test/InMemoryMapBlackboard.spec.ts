@@ -47,6 +47,30 @@ describe('InMemoryMapBlackboard', function() {
 		assert.strictEqual(gottenValue, value);
 	});
 
+	it('get clone where appropriate', function() {
+		const uut = new InMemoryMapBlackboard();
+
+		const bbRefObj = new BlackboardRef<{foo: string}>('obj');
+		const bbRefFunc = new BlackboardRef<() => boolean>('func');
+		const bbRefErr = new BlackboardRef<Error>('err');
+
+		const valueObj = {foo: 'asdf'};
+		const valueFunc = () => true;
+		const valueErr = new Error();
+
+		uut.put(bbRefObj, valueObj);
+		uut.put(bbRefFunc, valueFunc);
+		uut.put(bbRefErr, valueErr);
+
+		const gottenValueObj = uut.get(bbRefObj);
+		const gottenValueFunc = uut.get(bbRefFunc);
+		const gottenValueErr = uut.get(bbRefErr);
+
+		assert.notStrictEqual(gottenValueObj, valueObj);
+		assert.strictEqual(gottenValueFunc, valueFunc);
+		assert.strictEqual(gottenValueErr, valueErr);
+	});
+
 	it('tryGet', function() {
 		const uut = new InMemoryMapBlackboard();
 		const bbRef = new BlackboardRef('someName');
