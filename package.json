@@ -1,5 +1,5 @@
 {
-	"name": "@sixriver/blackboard",
+	"name": "@6river/blackboard",
 	"version": "1.0.0",
 	"description": "Imnplementation of the blackboard design pattern",
 	"engines": {
@@ -26,9 +26,6 @@
 	"repository": {
 		"type": "git",
 		"url": "https://github.com/6RiverSystems/blackboard.git"
-	},
-	"publishConfig": {
-		"registry": "https://sixriver.jfrog.io/sixriver/npm-local/"
 	},
 	"author": "",
 	"license": "",
