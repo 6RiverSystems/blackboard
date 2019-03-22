@@ -37,10 +37,13 @@ jobs:
       - attach_workspace:
           at: ./
       - run:
+          name: Set NPM auth token
+          command: |
+             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+      - run:
           name: npm publish via script
           command: |
-            ci_scripts/ci_tool.sh --run_release
-            ci_scripts/ci_tool.sh --npm_publish
+            ./scripts/release.sh
   test:
     docker:
       - image: node:8.9.4
