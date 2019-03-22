@@ -39,7 +39,7 @@ jobs:
       - run:
           name: Set NPM auth token
           command: |
-             echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" > ~/.npmrc
+            npm config set //registry.npmjs.org/:_authToken "${NPM_TOKEN}"
       - run:
           name: npm publish via script
           command: |
