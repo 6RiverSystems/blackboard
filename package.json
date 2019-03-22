@@ -28,7 +28,7 @@
 		"url": "https://github.com/6RiverSystems/blackboard.git"
 	},
 	"author": "",
-	"license": "",
+	"license": "ISC",
 	"devDependencies": {
 		"@types/archy": "0.0.31",
 		"@types/chai": "^4.0.4",
