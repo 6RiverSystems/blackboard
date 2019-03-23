@@ -22,7 +22,6 @@ jobs:
       - run:
           name: Set Up Environment
           command: |
-            git submodule update --init --recursive
             ci_scripts/ci_tool.sh --setup_npm
       - persist_to_workspace:
           root: ./
