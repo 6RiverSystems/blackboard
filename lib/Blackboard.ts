@@ -8,3 +8,14 @@ export interface Blackboard {
 	delete(ref: BlackboardRef<any>): boolean;
 	deleteAll(refs: BlackboardRef<any>[]): BlackboardRef<any>[];
 }
+
+function isFunction(maybeFunction: any): maybeFunction is Function {
+	return maybeFunction !== null && maybeFunction !== undefined && typeof maybeFunction === 'function';
+}
+
+export const BLACKBOARD_METHODS = Object.freeze(['create', 'get', 'tryGet', 'put', 'delete', 'deleteAll']);
+
+export function isBlackboard(maybeBlackboard: any): maybeBlackboard is Blackboard {
+	return (maybeBlackboard !== null && maybeBlackboard !== undefined)
+		&& !BLACKBOARD_METHODS.some((m) => !isFunction(maybeBlackboard[m]));
+}
