@@ -2,6 +2,7 @@ import {BlackboardRef} from './BlackboardRef';
 
 export interface Blackboard {
 	create<T>(ref: BlackboardRef<T>, value: T): void;
+	is<T>(ref: BlackboardRef<T>, value: T): boolean;
 	get<T>(ref: BlackboardRef<T>): T;
 	tryGet<T>(ref: BlackboardRef<T>): [true, T]|[false, undefined];
 	put<T>(ref: BlackboardRef<T>, value: T): void;
@@ -13,7 +14,7 @@ function isFunction(maybeFunction: any): maybeFunction is Function {
 	return maybeFunction !== null && maybeFunction !== undefined && typeof maybeFunction === 'function';
 }
 
-export const BLACKBOARD_METHODS = Object.freeze(['create', 'get', 'tryGet', 'put', 'delete', 'deleteAll']);
+export const BLACKBOARD_METHODS = Object.freeze(['create', 'get', 'tryGet', 'put', 'delete', 'deleteAll', 'is']);
 
 export function isBlackboard(maybeBlackboard: any): maybeBlackboard is Blackboard {
 	return (maybeBlackboard !== null && maybeBlackboard !== undefined)
