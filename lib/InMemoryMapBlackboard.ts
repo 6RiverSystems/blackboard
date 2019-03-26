@@ -6,6 +6,10 @@ import {BlackboardError} from './BlackboardError';
 export class InMemoryMapBlackboard implements Blackboard {
 	private readonly state: Map<string, [BlackboardRef<any>, any]> = new Map();
 
+	public is<T>(ref: BlackboardRef<T>, value: T) {
+		return this.state.has(ref.uuid) && this.state.get(ref.uuid)![1] === value;
+	}
+
 	public get<T>(ref: BlackboardRef<T>) {
 		if (this.state.has(ref.uuid)) {
 			return InMemoryMapBlackboard.cloneObject(this.state.get(ref.uuid)![1]);

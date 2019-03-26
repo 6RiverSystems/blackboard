@@ -25,6 +25,63 @@ describe('InMemoryMapBlackboard', function() {
 		assert.isTrue(thrown);
 	});
 
+	context('is', function() {
+		let uut = new InMemoryMapBlackboard();
+		const bbRef = new BlackboardRef('test');
+		beforeEach(function() {
+			uut = new InMemoryMapBlackboard();
+		});
+		const refVals = [{}, [], new Map()];
+		const valVals = ['', 'test', 3, 0, -1, true, false];
+		const magicVals = [() => ({}), new Error('test')];
+		context('same as stored', function() {
+			const testTrue = (value: any) => () => {
+				uut.create(bbRef, value);
+				assert.isTrue(uut.is(bbRef, value));
+			};
+			context('reference types', function() {
+				for (const value of refVals) {
+					it(`works with ${value}`, testTrue(value));
+				}
+			});
+			context('value types', function() {
+				for (const value of valVals) {
+					it(`works with ${value}`, testTrue(value));
+				}
+			});
+			context('magic types', function() {
+				for (const value of magicVals) {
+					it(`works with ${value}`, testTrue(value));
+				}
+			});
+		});
+		context('get-clone', function() {
+			const testFalse = (value: any) => () => {
+				uut.create(bbRef, value);
+				assert.isFalse(uut.is(bbRef, uut.get(bbRef)));
+			};
+			const testTrue = (value: any) => () => {
+				uut.create(bbRef, value);
+				assert.isTrue(uut.is(bbRef, uut.get(bbRef)));
+			};
+			context('reference types', function() {
+				for (const value of refVals) {
+					it(`works with ${value}`, testFalse(value));
+				}
+			});
+			context('value types', function() {
+				for (const value of valVals) {
+					it(`works with ${value}`, testTrue(value));
+				}
+			});
+			context('magic types', function() {
+				for (const value of magicVals) {
+					it(`works with ${value}`, testTrue(value));
+				}
+			});
+		});
+	});
+
 	it('get', function() {
 		const uut = new InMemoryMapBlackboard();
 		const bbRef = new BlackboardRef('someName');
