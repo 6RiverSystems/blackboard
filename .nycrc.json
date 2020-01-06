@@ -5,14 +5,16 @@
 		"text"
 	],
 	"include": [
-		"dist/**"
+		"dist/**",
+		"lib/**"
 	],
 	"exclude": [
 		"dist/test/**"
 	],
 	"extension": [
 		".ts",
-		".tsx"
+		".tsx",
+		".js"
 	],
 	"temp-directory": "./coverage/.nyc_output"
 }
