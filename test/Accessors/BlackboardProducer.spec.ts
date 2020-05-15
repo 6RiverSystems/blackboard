@@ -1,7 +1,8 @@
 import {assert} from 'chai';
-import {BlackboardRef} from '../../lib/BlackboardRef';
+
 import {InMemoryMapBlackboard} from '../../lib';
 import {BlackboardProducer} from '../../lib/Accessors';
+import {BlackboardRef} from '../../lib/BlackboardRef';
 
 describe('BlackboardProducer', function() {
 	let bb = new InMemoryMapBlackboard();

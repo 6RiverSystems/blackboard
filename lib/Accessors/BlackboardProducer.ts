@@ -1,6 +1,6 @@
-import {BlackboardRef} from '../BlackboardRef';
 import {Blackboard} from '../Blackboard';
 import {BlackboardError} from '../BlackboardError';
+import {BlackboardRef} from '../BlackboardRef';
 
 export class BlackboardProducer<T> {
 	constructor(private readonly ref: BlackboardRef<T>) {}

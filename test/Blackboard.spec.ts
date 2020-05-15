@@ -1,4 +1,5 @@
 import {assert} from 'chai';
+
 import {isBlackboard, BLACKBOARD_METHODS} from '../lib/Blackboard';
 
 function getMockBlackboard() {

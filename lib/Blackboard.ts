@@ -17,6 +17,6 @@ function isFunction(maybeFunction: any): maybeFunction is Function {
 export const BLACKBOARD_METHODS = Object.freeze(['create', 'get', 'tryGet', 'put', 'delete', 'deleteAll', 'is']);
 
 export function isBlackboard(maybeBlackboard: any): maybeBlackboard is Blackboard {
-	return (maybeBlackboard !== null && maybeBlackboard !== undefined)
-		&& !BLACKBOARD_METHODS.some((m) => !isFunction(maybeBlackboard[m]));
+	return (maybeBlackboard !== null && maybeBlackboard !== undefined) &&
+		!BLACKBOARD_METHODS.some((m) => !isFunction(maybeBlackboard[m]));
 }

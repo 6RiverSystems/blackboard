@@ -1,6 +1,7 @@
 import {assert} from 'chai';
-import {InMemoryMapBlackboard} from '../lib/InMemoryMapBlackboard';
+
 import {BlackboardRef} from '../lib';
+import {InMemoryMapBlackboard} from '../lib/InMemoryMapBlackboard';
 
 describe('InMemoryMapBlackboard', function() {
 	it('create', function() {
