@@ -1,4 +1,5 @@
 import {assert} from 'chai';
+
 import {BlackboardRef} from '../lib/BlackboardRef';
 
 describe('BlackboardRef', function() {

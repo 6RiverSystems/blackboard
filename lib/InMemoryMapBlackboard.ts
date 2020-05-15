@@ -1,7 +1,8 @@
-import {Blackboard} from './Blackboard';
-import {BlackboardRef} from './BlackboardRef';
 import * as _ from 'lodash';
+
+import {Blackboard} from './Blackboard';
 import {BlackboardError} from './BlackboardError';
+import {BlackboardRef} from './BlackboardRef';
 
 export class InMemoryMapBlackboard implements Blackboard {
 	private readonly state: Map<string, [BlackboardRef<any>, any]> = new Map();
