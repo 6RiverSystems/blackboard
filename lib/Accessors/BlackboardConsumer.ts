@@ -4,7 +4,7 @@ import {BlackboardRef} from '../BlackboardRef';
 
 export class BlackboardConsumer<T> {
 	constructor(private readonly ref: BlackboardRef<T>) {}
-	public consume(blackboard: Blackboard) {
+	public consume(blackboard: Blackboard): T {
 		const state = blackboard.tryGet(this.ref);
 		if (!state[0]) {
 			throw new BlackboardError(this.ref, `Cannot consume with no data available for ${this.ref.name}`);
