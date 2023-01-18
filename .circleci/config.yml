@@ -75,6 +75,8 @@ workflows:
     jobs:
       - setup
       - test:
+          # codecov orb step needs internal tokens
+          context: 6rs-circle
           requires:
             - setup
       - publish:
